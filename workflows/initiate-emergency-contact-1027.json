@@ -1,0 +1,24 @@
+{
+  "_id": "b0826975-1e62-4ab3-a9c8-c13ded931501",
+  "aiPersonaId": "1cf388e9-f546-4bef-bd75-b05ddb218b5f",
+  "integrationId": "initiate-emergency-contact-1027",
+  "name": "Workflow for Initiate Emergency Contact",
+  "publisherAccountId": "24318cbb-e003-45f0-adbd-ff7c00b4a4d2",
+  "startTaskId": "e5b465f2-5bd4-41a4-b1d9-c863329e95e5",
+  "status": "Active",
+  "tasks": [
+    {
+      "_id": "e5b465f2-5bd4-41a4-b1d9-c863329e95e5",
+      "transitions": [],
+      "type": "Display",
+      "config": {
+        "name": "Display",
+        "description": "Display the response to the user",
+        "type": "text",
+        "text": "Hi there! Intent $input.intent has been matched"
+      }
+    }
+  ],
+  "type": "Conversational",
+  "version": "latest"
+}

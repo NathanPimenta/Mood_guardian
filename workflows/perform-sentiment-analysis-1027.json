@@ -1,0 +1,24 @@
+{
+  "_id": "966f0565-9e21-4f1e-a4a4-7ed0be48b4f2",
+  "aiPersonaId": "1cf388e9-f546-4bef-bd75-b05ddb218b5f",
+  "integrationId": "perform-sentiment-analysis-1027",
+  "name": "Workflow for Perform Sentiment Analysis",
+  "publisherAccountId": "24318cbb-e003-45f0-adbd-ff7c00b4a4d2",
+  "startTaskId": "d1bdba6c-b961-4b70-86e0-79648d1c0955",
+  "status": "Active",
+  "tasks": [
+    {
+      "_id": "d1bdba6c-b961-4b70-86e0-79648d1c0955",
+      "transitions": [],
+      "type": "Display",
+      "config": {
+        "name": "Display",
+        "description": "Display the response to the user",
+        "type": "text",
+        "text": "Hi there! Intent $input.intent has been matched"
+      }
+    }
+  ],
+  "type": "Conversational",
+  "version": "latest"
+}

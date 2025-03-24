@@ -1,0 +1,24 @@
+{
+  "_id": "44fb2dd5-6fff-4e24-bc5c-024be526c3fe",
+  "aiPersonaId": "1cf388e9-f546-4bef-bd75-b05ddb218b5f",
+  "integrationId": "collect-user-input-1027",
+  "name": "Workflow for Collect User Input",
+  "publisherAccountId": "24318cbb-e003-45f0-adbd-ff7c00b4a4d2",
+  "startTaskId": "b4742b2a-66ed-4c0a-ba47-ad0704ff5009",
+  "status": "Active",
+  "tasks": [
+    {
+      "_id": "b4742b2a-66ed-4c0a-ba47-ad0704ff5009",
+      "transitions": [],
+      "type": "Display",
+      "config": {
+        "name": "Display",
+        "description": "Display the response to the user",
+        "type": "text",
+        "text": "Hi there! Intent $input.intent has been matched"
+      }
+    }
+  ],
+  "type": "Conversational",
+  "version": "latest"
+}

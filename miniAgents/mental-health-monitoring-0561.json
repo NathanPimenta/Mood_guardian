@@ -1,0 +1,63 @@
+{
+  "_id": "89a945d4-f919-4678-87ec-75af6477df4b",
+  "aiPersonaId": "1cf388e9-f546-4bef-bd75-b05ddb218b5f",
+  "integrationId": "mental-health-monitoring-0561",
+  "intentClassification": {
+    "modelId": "4cf651d9-edf3-455f-a22e-53cc67fcc07b"
+  },
+  "intents": [
+    {
+      "_id": "collect-user-input-0561",
+      "name": "Collect User Input",
+      "description": "Gathers user input through audio and text at scheduled intervals throughout the day to monitor mental health.",
+      "examples": [
+        "Record my mood at 9 AM.",
+        "Log my feelings after lunch.",
+        "Take a note of my thoughts before bed."
+      ],
+      "flowType": "Workflow",
+      "workflowId": "44fb2dd5-6fff-4e24-bc5c-024be526c3fe"
+    },
+    {
+      "_id": "perform-sentiment-analysis-0561",
+      "name": "Perform Sentiment Analysis",
+      "description": "Analyzes the collected user input and Google Calendar events to assess the user's mental state.",
+      "examples": [
+        "Analyze my mood based on today's entries.",
+        "Check my mental state using my calendar events.",
+        "What does my mood look like today?"
+      ],
+      "flowType": "Workflow",
+      "workflowId": "966f0565-9e21-4f1e-a4a4-7ed0be48b4f2"
+    },
+    {
+      "_id": "provide-mental-health-suggestions-0561",
+      "name": "Provide Mental Health Suggestions",
+      "description": "Offers suggestions and activities to improve the user's mental state based on the sentiment analysis results.",
+      "examples": [
+        "Suggest ways to improve my mood.",
+        "What can I do to feel better?",
+        "Give me some relaxation tips."
+      ],
+      "flowType": "Workflow",
+      "workflowId": "57a9f90d-367b-4a15-adcb-174e33d7121c"
+    },
+    {
+      "_id": "initiate-emergency-contact-0561",
+      "name": "Initiate Emergency Contact",
+      "description": "Calls an emergency contact if the sentiment analysis indicates a critical mental state.",
+      "examples": [
+        "Call my emergency contact.",
+        "Alert someone if I'm feeling very low.",
+        "What happens if my mental state is critical?"
+      ],
+      "flowType": "Workflow",
+      "workflowId": "b0826975-1e62-4ab3-a9c8-c13ded931501"
+    }
+  ],
+  "name": "Mental Health Monitoring",
+  "primaryWorkflowId": "f4c946c8-1d20-4c6c-adbe-2a9d31a3d812",
+  "publisherAccountId": "24318cbb-e003-45f0-adbd-ff7c00b4a4d2",
+  "scope": "Handles the collection and analysis of user input through audio and text at different intervals of the day, performs sentiment analysis using information from the user's Google Calendar, provides suggestions to improve mental state, and initiates emergency contact calls if the mental state is deemed critical.",
+  "status": "Active"
+}

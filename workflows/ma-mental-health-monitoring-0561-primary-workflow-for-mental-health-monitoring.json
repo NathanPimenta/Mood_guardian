@@ -1,0 +1,405 @@
+{
+  "_id": "f4c946c8-1d20-4c6c-adbe-2a9d31a3d812",
+  "aiPersonaId": "1cf388e9-f546-4bef-bd75-b05ddb218b5f",
+  "integrationId": "ma-mental-health-monitoring-0561-primary-workflow-for-mental-health-monitoring",
+  "isMiniAgentPrimaryWorkflow": true,
+  "name": "Primary Workflow for Mental Health Monitoring",
+  "publisherAccountId": "24318cbb-e003-45f0-adbd-ff7c00b4a4d2",
+  "startTaskId": "ebeba8c3-4f83-4280-8074-6403c2844ca0",
+  "status": "Active",
+  "tasks": [
+    {
+      "_id": "ebeba8c3-4f83-4280-8074-6403c2844ca0",
+      "type": "PassThrough",
+      "config": {
+        "name": "Pass Through",
+        "description": "Pass through the input to the output"
+      },
+      "transitions": [
+        {
+          "_id": "09f5e58b-cb9e-4a00-9d86-bb605c590187-ebeba8c3-4f83-4280-8074-6403c2844ca0",
+          "nextTask": "09f5e58b-cb9e-4a00-9d86-bb605c590187",
+          "name": "If query doesnt exists",
+          "rules": [
+            {
+              "type": "any",
+              "operator": "notExists",
+              "path": "$output.query"
+            }
+          ]
+        },
+        {
+          "_id": "21cb74c7-b1dc-4797-80ba-a75e66e2a3b3-ebeba8c3-4f83-4280-8074-6403c2844ca0",
+          "nextTask": "21cb74c7-b1dc-4797-80ba-a75e66e2a3b3",
+          "name": "If intents are already classified",
+          "rules": [
+            {
+              "type": "any",
+              "operator": "exists",
+              "path": "$output.intents"
+            },
+            {
+              "type": "any",
+              "operator": "exists",
+              "path": "$output.query"
+            }
+          ]
+        },
+        {
+          "_id": "ebeba8c3-4f83-4280-8074-6403c2844ca0-3a86c949-9c50-46bc-b82d-016792c8ca5a",
+          "name": "If query exists",
+          "nextTask": "3a86c949-9c50-46bc-b82d-016792c8ca5a",
+          "rules": [
+            {
+              "type": "any",
+              "operator": "exists",
+              "path": "$output.query"
+            },
+            {
+              "type": "any",
+              "operator": "notExists",
+              "path": "$output.intents"
+            }
+          ]
+        }
+      ],
+      "globalVariables": [
+        {
+          "name": "query",
+          "referencePath": "$input.query"
+        },
+        {
+          "name": "conversationId",
+          "referencePath": "$input.conversationId"
+        }
+      ]
+    },
+    {
+      "_id": "09f5e58b-cb9e-4a00-9d86-bb605c590187",
+      "type": "Input",
+      "config": {
+        "name": "User Input",
+        "description": "Get user input",
+        "type": "string"
+      },
+      "transitions": [
+        {
+          "_id": "09f5e58b-cb9e-4a00-9d86-bb605c590187-3a86c949-9c50-46bc-b82d-016792c8ca5a",
+          "name": "Default",
+          "nextTask": "3a86c949-9c50-46bc-b82d-016792c8ca5a"
+        }
+      ],
+      "globalVariables": [
+        {
+          "name": "query",
+          "referencePath": "$output.userInput"
+        },
+        {
+          "name": "selfLoopMiniAgent",
+          "referencePath": "true"
+        }
+      ]
+    },
+    {
+      "_id": "3a86c949-9c50-46bc-b82d-016792c8ca5a",
+      "type": "Loader",
+      "config": {
+        "name": "Loader",
+        "description": "Display loader message",
+        "type": "loader",
+        "text": "Just a moment... identifying the best approach to assist you."
+      },
+      "transitions": [
+        {
+          "_id": "3a86c949-9c50-46bc-b82d-016792c8ca5a-0b3f7f18-f72d-486d-9ccb-f406e54ee7b0",
+          "name": "Default",
+          "nextTask": "0b3f7f18-f72d-486d-9ccb-f406e54ee7b0"
+        }
+      ]
+    },
+    {
+      "_id": "0b3f7f18-f72d-486d-9ccb-f406e54ee7b0",
+      "type": "IntentClassification",
+      "config": {
+        "name": "Intent Classification",
+        "description": "Classify the intent of the user message",
+        "modelId": "4cf651d9-edf3-455f-a22e-53cc67fcc07b",
+        "intents": [
+          {
+            "name": "Collect User Input",
+            "description": "Gathers user input through audio and text at scheduled intervals throughout the day to monitor mental health.",
+            "examples": [
+              "Record my mood at 9 AM.",
+              "Log my feelings after lunch.",
+              "Take a note of my thoughts before bed."
+            ]
+          },
+          {
+            "name": "Perform Sentiment Analysis",
+            "description": "Analyzes the collected user input and Google Calendar events to assess the user's mental state.",
+            "examples": [
+              "Analyze my mood based on today's entries.",
+              "Check my mental state using my calendar events.",
+              "What does my mood look like today?"
+            ]
+          },
+          {
+            "name": "Provide Mental Health Suggestions",
+            "description": "Offers suggestions and activities to improve the user's mental state based on the sentiment analysis results.",
+            "examples": [
+              "Suggest ways to improve my mood.",
+              "What can I do to feel better?",
+              "Give me some relaxation tips."
+            ]
+          },
+          {
+            "name": "Initiate Emergency Contact",
+            "description": "Calls an emergency contact if the sentiment analysis indicates a critical mental state.",
+            "examples": [
+              "Call my emergency contact.",
+              "Alert someone if I'm feeling very low.",
+              "What happens if my mental state is critical?"
+            ]
+          }
+        ],
+        "query": "$agent.query"
+      },
+      "transitions": [
+        {
+          "_id": "0b3f7f18-f72d-486d-9ccb-f406e54ee7b0-21cb74c7-b1dc-4797-80ba-a75e66e2a3b3",
+          "name": "If Intent is Matched",
+          "rules": [
+            {
+              "type": "string",
+              "operator": "equal",
+              "path": "$output.intentMatched",
+              "value": "true"
+            }
+          ],
+          "nextTask": "21cb74c7-b1dc-4797-80ba-a75e66e2a3b3"
+        },
+        {
+          "_id": "0b3f7f18-f72d-486d-9ccb-f406e54ee7b0-6fccbb84-24d1-4ded-8af4-6c9211dd3033",
+          "name": "If No Intent is Matched",
+          "rules": [
+            {
+              "type": "string",
+              "operator": "equal",
+              "path": "$output.intentMatched",
+              "value": "false"
+            }
+          ],
+          "nextTask": "6fccbb84-24d1-4ded-8af4-6c9211dd3033"
+        }
+      ]
+    },
+    {
+      "_id": "21cb74c7-b1dc-4797-80ba-a75e66e2a3b3",
+      "type": "JSFunction",
+      "config": {
+        "name": "JS Function",
+        "description": "Execute JS function",
+        "code": "\nconst main = () => {\n    const currentExecutionId = _id;\n    const intents = agent?.icIntents?.[currentExecutionId] || input.intents;\n    const currentIndex = agent?.icLoopIndexes?.[currentExecutionId] || 0;\n    const currentIntent = intents[currentIndex] || {};\n    const { intent, task } = currentIntent;\n    const state = currentIndex === intents.length ? 'end' : 'continue'\n    const icLoopIndexes = { ...(agent?.icLoopIndexes || {}), [_id]: state === 'end' ? undefined : currentIndex + 1 };\n    const icIntents = { ...(agent?.icIntents || {}), [_id]: state === 'end' ? undefined : intents };\n    return { ...input, intent, state: currentIndex === intents.length ? 'end' : 'continue', icLoopIndexes, icIntents, query: task };\n};\n\nmain()\n"
+      },
+      "globalVariables": [
+        {
+          "referencePath": "$output.icLoopIndexes",
+          "name": "icLoopIndexes"
+        },
+        {
+          "referencePath": "$output.icIntents",
+          "name": "icIntents"
+        }
+      ],
+      "transitions": [
+        {
+          "_id": "21cb74c7-b1dc-4797-80ba-a75e66e2a3b3-7cf01a9f-9eed-41bf-92fa-b1dd7e6d0aa0",
+          "name": "If Intent is Matched",
+          "rules": [
+            {
+              "type": "string",
+              "operator": "equal",
+              "path": "$output.intent",
+              "value": "Collect User Input"
+            }
+          ],
+          "nextTask": "7cf01a9f-9eed-41bf-92fa-b1dd7e6d0aa0"
+        },
+        {
+          "_id": "21cb74c7-b1dc-4797-80ba-a75e66e2a3b3-bc429559-892f-4961-9331-5acd8e77be64",
+          "name": "If Intent is Matched",
+          "rules": [
+            {
+              "type": "string",
+              "operator": "equal",
+              "path": "$output.intent",
+              "value": "Perform Sentiment Analysis"
+            }
+          ],
+          "nextTask": "bc429559-892f-4961-9331-5acd8e77be64"
+        },
+        {
+          "_id": "21cb74c7-b1dc-4797-80ba-a75e66e2a3b3-a60a8290-0dfa-41c0-8d38-f1f47bb6e430",
+          "name": "If Intent is Matched",
+          "rules": [
+            {
+              "type": "string",
+              "operator": "equal",
+              "path": "$output.intent",
+              "value": "Provide Mental Health Suggestions"
+            }
+          ],
+          "nextTask": "a60a8290-0dfa-41c0-8d38-f1f47bb6e430"
+        },
+        {
+          "_id": "21cb74c7-b1dc-4797-80ba-a75e66e2a3b3-6c59909d-434b-422f-ba33-a83f231bbc4e",
+          "name": "If Intent is Matched",
+          "rules": [
+            {
+              "type": "string",
+              "operator": "equal",
+              "path": "$output.intent",
+              "value": "Initiate Emergency Contact"
+            }
+          ],
+          "nextTask": "6c59909d-434b-422f-ba33-a83f231bbc4e"
+        },
+        {
+          "_id": "21cb74c7-b1dc-4797-80ba-a75e66e2a3b3-09f5e58b-cb9e-4a00-9d86-bb605c590187",
+          "name": "If Self Loop",
+          "rules": [
+            {
+              "type": "string",
+              "operator": "equal",
+              "path": "$agent.selfLoopMiniAgent",
+              "value": "true"
+            },
+            {
+              "type": "string",
+              "operator": "equal",
+              "path": "$output.state",
+              "value": "end"
+            }
+          ],
+          "nextTask": "09f5e58b-cb9e-4a00-9d86-bb605c590187"
+        }
+      ]
+    },
+    {
+      "_id": "7cf01a9f-9eed-41bf-92fa-b1dd7e6d0aa0",
+      "type": "Workflow",
+      "config": {
+        "name": "Intent - Collect User Input",
+        "description": "Workflow for intent - Collect User Input",
+        "workflowId": "44fb2dd5-6fff-4e24-bc5c-024be526c3fe"
+      },
+      "transitions": [
+        {
+          "_id": "7cf01a9f-9eed-41bf-92fa-b1dd7e6d0aa0-21cb74c7-b1dc-4797-80ba-a75e66e2a3b3",
+          "name": "Mini agent execution completed",
+          "nextTask": "21cb74c7-b1dc-4797-80ba-a75e66e2a3b3"
+        }
+      ]
+    },
+    {
+      "_id": "bc429559-892f-4961-9331-5acd8e77be64",
+      "type": "Workflow",
+      "config": {
+        "name": "Intent - Perform Sentiment Analysis",
+        "description": "Workflow for intent - Perform Sentiment Analysis",
+        "workflowId": "966f0565-9e21-4f1e-a4a4-7ed0be48b4f2"
+      },
+      "transitions": [
+        {
+          "_id": "bc429559-892f-4961-9331-5acd8e77be64-21cb74c7-b1dc-4797-80ba-a75e66e2a3b3",
+          "name": "Mini agent execution completed",
+          "nextTask": "21cb74c7-b1dc-4797-80ba-a75e66e2a3b3"
+        }
+      ]
+    },
+    {
+      "_id": "a60a8290-0dfa-41c0-8d38-f1f47bb6e430",
+      "type": "Workflow",
+      "config": {
+        "name": "Intent - Provide Mental Health Suggestions",
+        "description": "Workflow for intent - Provide Mental Health Suggestions",
+        "workflowId": "57a9f90d-367b-4a15-adcb-174e33d7121c"
+      },
+      "transitions": [
+        {
+          "_id": "a60a8290-0dfa-41c0-8d38-f1f47bb6e430-21cb74c7-b1dc-4797-80ba-a75e66e2a3b3",
+          "name": "Mini agent execution completed",
+          "nextTask": "21cb74c7-b1dc-4797-80ba-a75e66e2a3b3"
+        }
+      ]
+    },
+    {
+      "_id": "6c59909d-434b-422f-ba33-a83f231bbc4e",
+      "type": "Workflow",
+      "config": {
+        "name": "Intent - Initiate Emergency Contact",
+        "description": "Workflow for intent - Initiate Emergency Contact",
+        "workflowId": "b0826975-1e62-4ab3-a9c8-c13ded931501"
+      },
+      "transitions": [
+        {
+          "_id": "6c59909d-434b-422f-ba33-a83f231bbc4e-21cb74c7-b1dc-4797-80ba-a75e66e2a3b3",
+          "name": "Mini agent execution completed",
+          "nextTask": "21cb74c7-b1dc-4797-80ba-a75e66e2a3b3"
+        }
+      ]
+    },
+    {
+      "_id": "6fccbb84-24d1-4ded-8af4-6c9211dd3033",
+      "transitions": [
+        {
+          "_id": "6fccbb84-24d1-4ded-8af4-6c9211dd3033-09f5e58b-cb9e-4a00-9d86-bb605c590187",
+          "name": "If Self Loop",
+          "rules": [
+            {
+              "type": "string",
+              "operator": "equal",
+              "path": "$agent.selfLoopMiniAgent",
+              "value": "true"
+            }
+          ],
+          "nextTask": "09f5e58b-cb9e-4a00-9d86-bb605c590187"
+        }
+      ],
+      "type": "Output",
+      "config": {
+        "name": "Output",
+        "description": "Output the response to the user",
+        "type": "external",
+        "text": "Unable to complete task $agent.query"
+      }
+    },
+    {
+      "_id": "eb0b832c-4fea-4c7d-a948-4de328970569",
+      "transitions": [
+        {
+          "_id": "eb0b832c-4fea-4c7d-a948-4de328970569-09f5e58b-cb9e-4a00-9d86-bb605c590187",
+          "name": "If Self Loop",
+          "rules": [
+            {
+              "type": "string",
+              "operator": "equal",
+              "path": "$agent.selfLoopMiniAgent",
+              "value": "true"
+            }
+          ],
+          "nextTask": "09f5e58b-cb9e-4a00-9d86-bb605c590187"
+        }
+      ],
+      "type": "Display",
+      "config": {
+        "name": "Display",
+        "description": "Display the response to the user",
+        "type": "text",
+        "text": "$input.content"
+      }
+    }
+  ],
+  "type": "Conversational",
+  "version": "latest"
+}

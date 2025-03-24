@@ -1,0 +1,47 @@
+{
+  "aiPersonaIntegrationId": "mental-health-monitoring-agent-7742",
+  "version": "1.0.0",
+  "description": "AI Agent mental-health-monitoring-agent-7742 package version 1.0.0",
+  "data": {
+    "workflows": [
+      [
+        "workflows",
+        "collect-user-input-1027.json"
+      ],
+      [
+        "workflows",
+        "perform-sentiment-analysis-1027.json"
+      ],
+      [
+        "workflows",
+        "provide-mental-health-suggestions-1027.json"
+      ],
+      [
+        "workflows",
+        "initiate-emergency-contact-1027.json"
+      ],
+      [
+        "workflows",
+        "ma-mental-health-monitoring-0561-primary-workflow-for-mental-health-monitoring.json"
+      ]
+    ],
+    "models": [
+      [
+        "models",
+        "azure-gpt-4o-mini.json"
+      ]
+    ],
+    "miniAgents": [
+      [
+        "miniAgents",
+        "mental-health-monitoring-0561.json"
+      ]
+    ],
+    "aiPersonas": [
+      [
+        "aiPersonas",
+        "mental-health-monitoring-agent-7742.json"
+      ]
+    ]
+  }
+}
